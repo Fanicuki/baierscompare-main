@@ -1,0 +1,11 @@
+1. Abrir Visual Studio Code
+
+2. Descargar las extensiones de Flutter y Dart
+
+3. Presionar "Ctrl + Mayús + P" para abrir la barra de comandos de visual
+
+4. Ingresar ">flutter: New Proyect" > "Aplication" > Crean una carpeta donde se guardará la aplicación
+
+5. Luego de se finalice de crear todo, reemplazan todos los archivos de "flutter_project_2" en la carpeta que crearon
+
+6. Disfrutar
