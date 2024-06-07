@@ -1,0 +1,1 @@
+ C:\\Users\\fayga\\OneDrive\\Escritorio\\BairesCompare\\visual\\prueba\\flutter_application_2\\.dart_tool\\flutter_build\\617e412ec0c294b549c677cc1fac8719\\native_assets.yaml: 
