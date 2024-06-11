@@ -64,28 +64,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start, // Justificar a la izquierda
                   children: [
                     Text(
-  'Baires',
-  style: TextStyle(
-    fontSize: 40,
-    color: Colors.white,
-    fontWeight: FontWeight.bold, // Establecer negrita
-  ),
-),
-Text(
-  'Compare',
-  style: TextStyle(
-    fontSize: 40,
-    color: Colors.white,
-    fontWeight: FontWeight.bold, // Establecer negrita
-  ),
-),
+                      'Baires',
+                      style: TextStyle(
+                        fontSize: 50,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold, // Establecer negrita
+                      ),
+                    ),
+                    Text(
+                      'Compare',
+                      style: TextStyle(
+                        fontSize: 50,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold, // Establecer negrita
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(width: 20), // Espaciado entre el texto y la imagen
+                SizedBox(width: 30), // Espaciado entre el texto y la imagen
                 Image.network(
                   'https://img.icons8.com/?size=100&id=85122&format=png&color=FFFFFF', // URL de la imagen
-                  height: 80, // Ajusta el tamaño de la imagen según sea necesario
-                  width: 80, // Ajusta el tamaño de la imagen según sea necesario
+                  height: 130, // Ajusta el tamaño de la imagen según sea necesario
+                  width: 130, // Ajusta el tamaño de la imagen según sea necesario
                 ),
               ],
             ),
@@ -183,16 +183,6 @@ class MapScreen extends StatelessWidget {
             // Aquí van las otras propiedades del mapa
           ),
           Positioned(
-            top: 100.0, // Ajustar la posición vertical según sea necesario
-            right: 20.0,
-            child: FloatingActionButton(
-              onPressed: () {
-                _showOptionsDialog(context);
-              },
-              child: Icon(Icons.settings),
-            ),
-          ),
-          Positioned(
             top: 35.0,
             left: 10.0,
             right: 10.0,
@@ -218,11 +208,61 @@ class MapScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10.0),
+                  IconButton(
+                    icon: Icon(Icons.settings),
+                    color: Colors.white,
+                    onPressed: () {
+                      _showOptionsDialog(context);
+                    },
+                  ),
                 ],
               ),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Color(0xFF334756),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: Icon(Icons.person),
+              color: Colors.white,
+              onPressed: () {
+                // Lógica para navegar a la pantalla de perfil
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.star),
+              color: Colors.white,
+              onPressed: () {
+                // Lógica para navegar a la pantalla de favoritos
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.shopping_cart),
+              color: Colors.white,
+              onPressed: () {
+                // Lógica para navegar a la pantalla de productos
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.check),
+              color: Colors.white,
+              onPressed: () {
+                // Lógica para navegar a la pantalla de lista de tareas
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -237,14 +277,10 @@ class MapScreen extends StatelessWidget {
             child: ListBody(
               children: [
                 ListTile(
-                  leading: Icon(Icons.logout),
                   title: Text('Cerrar sesión'),
                   onTap: () {
                     Navigator.of(context).pop(); // Cerrar el diálogo
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
+                    // Lógica para cerrar sesión
                   },
                 ),
               ],
