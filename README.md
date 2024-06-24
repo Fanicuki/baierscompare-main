@@ -1,4 +1,4 @@
-# Ba8resCompare
+# BairesCompare
 
 A new Flutter project.
 
