@@ -368,10 +368,10 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2024-05-31T22:00:55.197507Z",
+  "generated": "2024-06-24T22:21:13.578445Z",
   "generator": "pub",
-  "generatorVersion": "3.4.1",
+  "generatorVersion": "3.4.3",
   "flutterRoot": "file:///C:/Users/fayga/Downloads/OTROS/flutter",
-  "flutterVersion": "3.22.1",
+  "flutterVersion": "3.22.2",
   "pubCache": "file:///C:/Users/fayga/AppData/Local/Pub/Cache"
 }

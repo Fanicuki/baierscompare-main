@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'screens/product_list_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-    // Aquí puedes agregar tu lógica de autenticación
     if (username == 'admin' && password == 'admin') {
       Navigator.pushReplacement(
         context,
@@ -52,23 +54,23 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Color(0xFF38A3A5),
               borderRadius: BorderRadius.circular(15.0),
               border: Border(
-                bottom: BorderSide(width: 3.0, color: Color.fromARGB(255, 117, 255, 209)), // Borde inferior
+                bottom: BorderSide(width: 3.0, color: Color.fromARGB(255, 117, 255, 209)), 
               ),
             ),
-            height: MediaQuery.of(context).size.height * 0.28, // 1/4 de la pantalla
+            height: MediaQuery.of(context).size.height * 0.28, 
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Centrar el contenido
+              mainAxisAlignment: MainAxisAlignment.center, 
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start, // Justificar a la izquierda
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Baires',
                       style: TextStyle(
                         fontSize: 50,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold, // Establecer negrita
+                        fontWeight: FontWeight.bold, 
                       ),
                     ),
                     Text(
@@ -76,16 +78,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         fontSize: 50,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold, // Establecer negrita
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(width: 30), // Espaciado entre el texto y la imagen
+                SizedBox(width: 30), 
                 Image.network(
-                  'https://img.icons8.com/?size=100&id=85122&format=png&color=FFFFFF', // URL de la imagen
-                  height: 130, // Ajusta el tamaño de la imagen según sea necesario
-                  width: 130, // Ajusta el tamaño de la imagen según sea necesario
+                  'https://img.icons8.com/?size=100&id=85122&format=png&color=FFFFFF',
+                  height: 130,
+                  width: 130,
                 ),
               ],
             ),
@@ -137,7 +139,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 30),
                   TextButton(
                     onPressed: () {
-                      // Aquí puedes agregar la lógica para recuperar la contraseña
                     },
                     child: Text(
                       '¿Olvidó su contraseña?',
@@ -177,10 +178,9 @@ class MapScreen extends StatelessWidget {
         children: [
           GoogleMap(
             initialCameraPosition: CameraPosition(
-              target: LatLng(-34.604299305287064, -58.4034642318363), // Coordenadas de ejemplo
+              target: LatLng(-34.604299305287064, -58.4034642318363), 
               zoom: 11.0,
             ),
-            // Aquí van las otras propiedades del mapa
           ),
           Positioned(
             top: 35.0,
@@ -237,28 +237,28 @@ class MapScreen extends StatelessWidget {
               icon: Icon(Icons.person),
               color: Colors.white,
               onPressed: () {
-                // Lógica para navegar a la pantalla de perfil
               },
             ),
             IconButton(
               icon: Icon(Icons.star),
               color: Colors.white,
               onPressed: () {
-                // Lógica para navegar a la pantalla de favoritos
               },
             ),
             IconButton(
               icon: Icon(Icons.shopping_cart),
               color: Colors.white,
               onPressed: () {
-                // Lógica para navegar a la pantalla de productos
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProductListScreen()),
+                );
               },
             ),
             IconButton(
               icon: Icon(Icons.check),
               color: Colors.white,
               onPressed: () {
-                // Lógica para navegar a la pantalla de lista de tareas
               },
             ),
           ],
@@ -279,8 +279,7 @@ class MapScreen extends StatelessWidget {
                 ListTile(
                   title: Text('Cerrar sesión'),
                   onTap: () {
-                    Navigator.of(context).pop(); // Cerrar el diálogo
-                    // Lógica para cerrar sesión
+                    Navigator.of(context).pop();
                   },
                 ),
               ],
@@ -288,6 +287,62 @@ class MapScreen extends StatelessWidget {
           ),
         );
       },
+    );
+    
+  }
+ 
+}
+class ProductsScreen extends StatefulWidget {
+  @override
+  _ProductsScreenState createState() => _ProductsScreenState();
+}
+class _ProductsScreenState extends State<ProductsScreen> {
+  List<dynamic> products = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProducts();
+  }
+
+  Future<void> fetchProducts() async {
+    try {
+      final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/products'));
+
+      if (response.statusCode == 200) {
+        setState(() {
+          products = json.decode(response.body);
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load products');
+      }
+    } catch (error) {
+      print('Error fetching products: $error');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Products'),
+      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(products[index]['name']),
+                  subtitle: Text(products[index]['price']),
+                );
+              },
+            ),
     );
   }
 }
