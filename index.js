@@ -9,6 +9,7 @@ app.get('/api/products/page1', async (req, res) => {
     const response = await axios.get('https://www.carrefour.com.ar/almacen');
     res.json(response.data);
   } catch (error) {
+    console.error("Error fetching page1 products:", error.message);
     res.status(500).send(error.message);
   }
 });
@@ -18,6 +19,7 @@ app.get('/api/products/page2', async (req, res) => {
     const response = await axios.get('https://diaonline.supermercadosdia.com.ar/almacen');
     res.json(response.data);
   } catch (error) {
+    console.error("Error fetching page2 products:", error.message);
     res.status(500).send(error.message);
   }
 });
@@ -27,6 +29,7 @@ app.get('/api/products/page3', async (req, res) => {
     const response = await axios.get('https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n/_/N-8pub5zZ1uh5oniZyq0zf8/');
     res.json(response.data);
   } catch (error) {
+    console.error("Error fetching page3 products:", error.message);
     res.status(500).send(error.message);
   }
 });

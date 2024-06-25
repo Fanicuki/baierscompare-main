@@ -288,15 +288,27 @@ class MapScreen extends StatelessWidget {
         );
       },
     );
-    
   }
- 
 }
-class ProductsScreen extends StatefulWidget {
+
+class ProductListScreen extends StatelessWidget {
   @override
-  _ProductsScreenState createState() => _ProductsScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Products'),
+      ),
+      body: ProductList(),
+    );
+  }
 }
-class _ProductsScreenState extends State<ProductsScreen> {
+
+class ProductList extends StatefulWidget {
+  @override
+  _ProductListState createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
   List<dynamic> products = [];
   bool isLoading = true;
 
@@ -308,7 +320,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   Future<void> fetchProducts() async {
     try {
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/products'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:5000/products'));
 
       if (response.statusCode == 200) {
         setState(() {
@@ -328,21 +340,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Products'),
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(products[index]['name']),
-                  subtitle: Text(products[index]['price']),
-                );
-              },
-            ),
-    );
+    return isLoading
+        ? Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(products[index]['name']),
+                subtitle: Text(products[index]['price']),
+              );
+            },
+          );
   }
 }
